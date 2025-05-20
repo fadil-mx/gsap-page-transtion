@@ -10,17 +10,68 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-grotesk: var(--font-space-grotesk);
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-grotesk);
+}
+
+@layer base {
+  * {
+    @apply p-0 m-0 box-border font-grotesk;
+  }
+
+  h1 {
+    @apply text-4xl font-semibold leading-[-0.1rem] tracking-wide
+  }
+
+  h2 {
+    @apply text-2xl font-bold
+  }
+
+  a, p {
+    @apply block text-base font-semibold
+  }
+}
+
+@layer utilities {
+  .border {
+    @apply border-4 border-solid border-amber-300
+  }
+
+  .revealer {
+    @apply fixed top-0 left-0 w-screen h-screen origin-top z-30 bg-black
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none !important;
+}
+
+::view-transition-group(root) {
+  z-index: auto !important;
+}
+
+::view-transition-image-pair(root) {
+  isolation: isolate;
+  z-index: 1;
+  will-change: clip-path;
+
+}
+
+::view-transition-new(root) {
+  z-index: 10000;
+  animation: none !important;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+  animation: none !important;
 }
